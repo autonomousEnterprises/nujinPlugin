@@ -3,9 +3,16 @@ from pydantic import BaseModel
 import sys
 from pathlib import Path
 
-# Add the parent directory so we can import tools from the plugin
-sys.path.append(str(Path(__file__).parent.parent))
-import tools
+import importlib.util
+
+# Load the plugin's tools.py explicitly to avoid conflicts with any system 'tools' modules
+plugin_dir = Path(__file__).parent.parent
+tools_path = plugin_dir / "tools.py"
+
+spec = importlib.util.spec_from_file_location("plugin_tools", str(tools_path))
+plugin_tools = importlib.util.module_from_spec(spec)
+sys.modules["plugin_tools"] = plugin_tools
+spec.loader.exec_module(plugin_tools)
 
 router = APIRouter()
 
@@ -19,7 +26,7 @@ class WidgetConfig(BaseModel):
 @router.get("/workspace/{session_id}")
 async def get_workspace(session_id: str):
     """Returns the workspace configuration for a given session."""
-    workspace = tools._load_workspace(session_id)
+    workspace = plugin_tools._load_workspace(session_id)
     return workspace
 
 @router.post("/workspace/{session_id}/widget")
@@ -33,7 +40,7 @@ async def add_or_update_widget(session_id: str, widget: WidgetConfig):
         "config": widget.config,
         "col_span": widget.col_span
     }
-    result_str = tools.create_widget(args)
+    result_str = plugin_tools.create_widget(args)
     import json
     return json.loads(result_str)
 
@@ -41,6 +48,6 @@ async def add_or_update_widget(session_id: str, widget: WidgetConfig):
 async def delete_widget(session_id: str, widget_id: str):
     """Remove a widget via API."""
     args = {"session_id": session_id, "widget_id": widget_id}
-    result_str = tools.remove_widget(args)
+    result_str = plugin_tools.remove_widget(args)
     import json
     return json.loads(result_str)
