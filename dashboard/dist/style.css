@@ -1,0 +1,6 @@
+/* Custom styles for the dynamic dashboard plugin */
+
+/* Ensure the bento grid items have smooth transitions if they resize */
+.flex-wrap > div {
+    transition: all 0.3s ease-in-out;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "dynamic-dashboard",
+  "label": "Workspace",
+  "description": "Dynamic Dashboard Workspace",
+  "icon": "Activity",
+  "version": "0.1.0",
+  "tab": {
+    "path": "/workspace",
+    "position": "after:chat"
+  },
+  "entry": "dist/index.js",
+  "css": "dist/style.css",
+  "api": "plugin_api.py"
+}

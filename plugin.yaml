@@ -1,14 +1,9 @@
-name: example-plugin
-version: 1.0.0
-description: A template plugin for Hermes Agent showcasing tools, hooks, and skills.
+name: dynamic-dashboard
+version: 0.1.0
+description: A dynamic dashboard plugin that integrates background cron monitoring jobs with an evolving UI.
 provides_tools:
-  - example_tool
+  - create_widget
+  - remove_widget
+  - schedule_monitoring_job
 provides_hooks:
-  - post_tool_call
-
-# Optional: Gate loading on environment variables
-# requires_env:
-#   - name: EXAMPLE_API_KEY
-#     description: "API key for the example service"
-#     url: "https://example.com/api"
-#     secret: true
+  - on_session_start
