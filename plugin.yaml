@@ -1,0 +1,14 @@
+name: example-plugin
+version: 1.0.0
+description: A template plugin for Hermes Agent showcasing tools, hooks, and skills.
+provides_tools:
+  - example_tool
+provides_hooks:
+  - post_tool_call
+
+# Optional: Gate loading on environment variables
+# requires_env:
+#   - name: EXAMPLE_API_KEY
+#     description: "API key for the example service"
+#     url: "https://example.com/api"
+#     secret: true
