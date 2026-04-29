@@ -14,6 +14,22 @@
     function WorkspacePage() {
         const [session_id, setSessionId] = SDK.hooks.useState("default");
         const [workspace, setWorkspace] = SDK.hooks.useState({ widgets: [] });
+        const [availableSessions, setAvailableSessions] = SDK.hooks.useState(["default"]);
+
+        SDK.hooks.useEffect(() => {
+            const fetchSessions = async () => {
+                try {
+                    const res = await SDK.fetchJSON('/api/plugins/dynamic-dashboard/workspaces');
+                    setAvailableSessions(res.length > 0 ? res : ["default"]);
+                    if (!res.includes(session_id) && res.length > 0) {
+                        setSessionId(res[0]);
+                    }
+                } catch (err) {
+                    console.error("Failed to load sessions", err);
+                }
+            };
+            fetchSessions();
+        }, []);
 
         SDK.hooks.useEffect(() => {
             let interval;
@@ -78,7 +94,16 @@
         return React.createElement("div", { className: "p-6 flex flex-col h-full space-y-4" },
             React.createElement("div", { className: "flex justify-between items-center" },
                 React.createElement("h1", { className: "text-2xl font-bold" }, "Workspace"),
-                React.createElement("div", { className: "text-sm text-muted-foreground" }, "Session: ", session_id)
+                React.createElement("div", { className: "flex items-center gap-2 text-sm text-muted-foreground" }, 
+                    "Session:",
+                    React.createElement("select", {
+                        value: session_id,
+                        onChange: (e) => setSessionId(e.target.value),
+                        className: "ml-2 p-1 bg-transparent border border-muted rounded uppercase"
+                    }, availableSessions.map(s => 
+                        React.createElement("option", { key: s, value: s }, s)
+                    ))
+                )
             ),
             
             React.createElement("div", { className: "flex flex-wrap -m-2 items-stretch" },

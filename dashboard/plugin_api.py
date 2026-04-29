@@ -23,6 +23,19 @@ class WidgetConfig(BaseModel):
     config: dict
     col_span: int = 1
 
+@router.get("/workspaces")
+async def list_workspaces():
+    """Returns a list of all available session IDs that have workspaces."""
+    import os
+    workspaces_dir = plugin_tools.WORKSPACES_DIR
+    if not workspaces_dir.exists():
+        return []
+    
+    sessions = []
+    for f in workspaces_dir.glob("*.json"):
+        sessions.append(f.stem)
+    return sessions
+
 @router.get("/workspace/{session_id}")
 async def get_workspace(session_id: str):
     """Returns the workspace configuration for a given session."""
