@@ -12,8 +12,12 @@ This plugin transforms the Hermes Agent into a fully autonomous, data-driven wor
 
 ## Installation & Setup
 
-1. **Clone the Plugin**:
-   Place this plugin folder into your Hermes Agent's plugins directory.
+1. **Install and Enable the Plugin**:
+   Use the Hermes CLI to install and enable the plugin directly from your repository:
+   ```bash
+   hermes plugins install <your-github-username>/nujinPlugin --enable
+   ```
+   *(Note: You can also manage your plugins interactively by running `hermes plugins` or use `hermes plugins list` to check status)*
 
 2. **Access the Dashboard**:
    Run the following command to start the Hermes Web UI:
