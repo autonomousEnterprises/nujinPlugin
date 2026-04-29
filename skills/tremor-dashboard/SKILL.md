@@ -20,7 +20,13 @@ The dashboard uses a Flex Bento grid. You can control the size of widgets using 
 The `config` parameter for `create_widget` is a **generic React Tree mapping** to Tremor components or HTML tags. You have the power to nest any components you want.
 
 **Supported Components:**
-You can use ANY component from `@tremor/react` (Card, Title, Text, Metric, LineChart, BarChart, DonutChart, Tracker, Table, Grid, Col, etc.) and standard HTML tags (`div`, `span`, `p`, etc.). 
+You can use ANY component from `@tremor/react`. It is critical to know that **ALL Tremor charts** are available.
+Here is a complete list of common components you can use as the `type`:
+- **Charts:** `AreaChart`, `BarChart`, `LineChart`, `DonutChart`, `ScatterChart`, `SparkAreaChart`, `SparkBarChart`, `SparkLineChart`
+- **Data Display:** `Metric`, `Table`, `TableHead`, `TableRow`, `TableHeaderCell`, `TableBody`, `TableCell`, `List`, `ListItem`, `Tracker`, `ProgressBar`, `MarkerBar`, `DeltaBar`
+- **Layout/Containers:** `Card`, `Grid`, `Col`, `Flex`
+- **Typography:** `Title`, `Text`, `Subtitle`, `Bold`, `Italic`
+- **Standard HTML:** `div`, `span`, `p`, etc. 
 
 **Config Schema Example:**
 ```json
